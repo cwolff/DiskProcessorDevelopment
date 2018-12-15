@@ -1,0 +1,69 @@
+# Last revised : Sun 13-Sep-87 at 2:14 pm
+#
+# Macro definition
+#
+
+DIR=\\dp
+CC=cc
+ASM=masm
+HEAD=$(DIR)
+SYSHEAD=\\include
+OBJ=$(DIR)
+SYSOBJ=\\obj
+PROD=$(DIR)
+SYSLIB=\\lib
+MODEL=s
+OPT=-Zi
+
+#
+# Make disk
+#
+
+dp.exe: $(OBJ)\\dp.obj
+dp.exe: $(OBJ)\\dp_sctr.obj
+dp.exe: $(OBJ)\\dp_boot.obj
+dp.exe: $(OBJ)\\dp_menu.obj
+dp.exe: $(OBJ)\\dp_view.obj
+dp.exe: $(OBJ)\\dp_show.obj
+dp.exe: $(OBJ)\\dp_io.obj 
+dp.exe: $(OBJ)\\dp_print.obj
+dp.exe: $(OBJ)\\dp_video.obj
+dp.exe: $(OBJ)\\dp_key.obj
+dp.exe: $(OBJ)\\dp_glbl.obj
+	cc -o dp $(OPT)	dp dp_sctr dp_boot dp_menu dp_view dp_show dp_io dp_print dp_video dp_key dp_glbl
+
+$(OBJ)\\dp.obj: dp.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp.c
+
+$(OBJ)\\dp_sctr.obj: dp_sctr.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_sctr.c
+
+$(OBJ)\\dp_boot.obj: dp_boot.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_boot.c
+
+$(OBJ)\\dp_menu.obj: dp_menu.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_menu.c
+
+$(OBJ)\\dp_view.obj: dp_view.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_view.c
+
+$(OBJ)\\dp_show.obj: dp_show.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_show.c
+
+$(OBJ)\\dp_io.obj: dp_io.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_io.c
+
+$(OBJ)\\dp_print.obj: dp_print.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_print.c
+
+$(OBJ)\\dp_video.obj: dp_video.asm
+	$(ASM) dp_video.asm,dp_video.obj;
+
+$(OBJ)\\dp_key.obj: dp_key.c $(HEAD)\\dp.h $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_key.c
+
+$(OBJ)\\dp_glbl.obj: dp_glbl.c $(HEAD)\\dp_extrn.h
+	$(CC)  $(OPT) -c dp_glbl.c
+ 
+
+
